@@ -2,20 +2,22 @@ package hibernate;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 
 
 @Entity
-@Table(name="StudentDetails")
-public class Student implements Serializable{
+@Cacheable
+@Cache(usage=CacheConcurrencyStrategy.READ_ONLY)
+public class Student2 implements Serializable{
 	
 	/**
 	 * 
@@ -23,7 +25,6 @@ public class Student implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
 	@Column(name="StudentId")
 	private int id;
 	@Column(name="StudentName")
@@ -31,22 +32,10 @@ public class Student implements Serializable{
 	@Column(name="EnrollNumber")
 	private int num;
 	
-	@OneToOne(cascade = {CascadeType.ALL})
-	@PrimaryKeyJoinColumn
-	private StudentAddress studentAddress;
-	
-	
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", num=" + num + ", studentAddress=" + studentAddress + "]";
+		return "Student2 [id=" + id + ", name=" + name + ", num=" + num + "]";
 	}
-	public StudentAddress getStudentAddress() {
-		return studentAddress;
-	}
-	public void setStudentAddress(StudentAddress studentAddress) {
-		this.studentAddress = studentAddress;
-	}
-	
 	public int getId() {
 		return id;
 	}
